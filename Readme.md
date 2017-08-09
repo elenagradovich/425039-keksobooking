@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Елена Градович](https://up.htmlacademy.ru/javascript/10/user/425039).
-* Наставник: `Неизвестно`.
+* Наставник: `Арсений Ильяшов`.
 
 ---
 
