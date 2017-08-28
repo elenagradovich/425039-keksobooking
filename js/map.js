@@ -79,7 +79,6 @@ mapMarks.appendChild(fragment);
 
 var appartmentTemplate = document.querySelector('#lodge-template').content;
 var offerDialog = document.querySelector('.dialog');
-var dialogPanel = offerDialog.querySelector('.dialog__panel');
 var dialogTitle = offerDialog.querySelector('.dialog__title');
 
 
@@ -141,8 +140,6 @@ for (i = 0; i < pins.length; i++) {
   pins[i].addEventListener('click', clickPinHeandler);
   pins[i].setAttribute('data', i);
 }
-var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
 
 var closeDialogPanel = function () {
   dialog.classList.add('hidden');
