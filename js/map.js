@@ -25,7 +25,7 @@ function getRandomArrayValue(array) {
 function createApartmentObject(index) {
   var apartmentObject = {};
   apartmentObject.author = {
-    avatar: 'img/avatars/user0' + index + '.png'
+    avatar: 'img/avatars/user0' + (index + 1) + '.png'
   };
   var positionX = getRandomValue(300, 900);
   var positionY = getRandomValue(100, 500);
@@ -51,7 +51,7 @@ function createApartmentObject(index) {
 }
 
 var rentedAccommodations = [];
-for (var i = 1; i < 9; i++) {
+for (var i = 0; i < 8; i++) {
   rentedAccommodations.push(createApartmentObject(i));
 }
 
@@ -92,7 +92,7 @@ function determineOfferType(type) {
   }
 }
 
-function generateAppartmentObject(rentedAccommodation) {
+function generateDialogOffer(rentedAccommodation) {
   var offerObject = appartmentTemplate.cloneNode(true);
   var offerFeatures = offerObject.querySelector('.lodge__features');
   offerObject.querySelector('.lodge__title').textContent = rentedAccommodation.offer.title;
@@ -115,37 +115,67 @@ function generateAppartmentObject(rentedAccommodation) {
 var appartmentObject;
 
 function showDialogPanel(number) {
-  appartmentObject = generateAppartmentObject(rentedAccommodations[number]);
+  appartmentObject = generateDialogOffer(rentedAccommodations[number]);
   offerDialog.replaceChild(appartmentObject, offerDialog.querySelector('.dialog__panel'));
 }
 
 showDialogPanel(0);
 
 var pins = document.querySelectorAll('.pin');
-var dialog = document.querySelector('.dialog');
 var clickedPin = null;
-var dialogClose = dialog.querySelector('.dialog__close');
+var dialogClose = offerDialog.querySelector('.dialog__close');
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
 var clickPinHeandler = function (evt) {
+  var hiddenDialog = document.getElementById('offer-dialog');
+
+  if (hiddenDialog.classList[1] === 'hidden') {
+    hiddenDialog.classList.remove('hidden');
+  }
+
   if (clickedPin) {
     clickedPin.classList.remove('pin--active');
   }
+
   clickedPin = evt.currentTarget;
   clickedPin.classList.add('pin--active');
   var index = clickedPin.getAttribute('data');
-  showDialogPanel(index);
+  showDialogPanel(index - 1);
 };
 
 for (i = 0; i < pins.length; i++) {
   pins[i].addEventListener('click', clickPinHeandler);
   pins[i].setAttribute('data', i);
+  pins[i].addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      clickPinHeandler(evt);
+    }
+  });
+}
+var activePin = document.getElementsByClassName('pin--active');
+function removePinActiveClass() {
+  activePin[0].classList.remove('pin--active');
 }
 
-var closeDialogPanel = function () {
-  dialog.classList.add('hidden');
-};
+function closeDialogPanel() {
+  removePinActiveClass();
+  offerDialog.classList.add('hidden');
+}
 
+dialogClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closeDialogPanel();
+  }
+});
 
 dialogClose.addEventListener('click', function () {
   closeDialogPanel();
 });
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE && activePin) {
+    closeDialogPanel();
+  }
+});
+
