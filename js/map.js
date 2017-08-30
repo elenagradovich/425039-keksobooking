@@ -179,15 +179,12 @@ document.addEventListener('keydown', function (evt) {
   }
 });
 
-
 var entryFieldTimein = document.getElementById('timein');
 var entryFieldTimeout = document.getElementById('timeout');
 var entryFieldType = document.getElementById('type');
 var entryFieldPrice = document.getElementById('price');
 var entryFieldRoomNumber = document.getElementById('room_number');
 var entryFieldCapacity = document.getElementById('capacity');
-
-
 
 entryFieldTimein.addEventListener('click', function () {
   if (entryFieldTimein.value === '12:00') {
