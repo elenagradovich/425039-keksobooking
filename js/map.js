@@ -22,16 +22,16 @@ function getRandomArrayValue(array) {
   var indexName = Math.floor(Math.random() * array.length);
   return array[indexName];
 }
-function createApartmentObject(i) {
+function createApartmentObject(index) {
   var apartmentObject = {};
   apartmentObject.author = {
-    avatar: 'img/avatars/user0' + i + '.png'
+    avatar: 'img/avatars/user0' + (index + 1) + '.png'
   };
   var positionX = getRandomValue(300, 900);
   var positionY = getRandomValue(100, 500);
   var apartmentRooms = getRandomValue(1, 5);
   apartmentObject.offer = {
-    title: titleDate[i],
+    title: titleDate[index],
     address: positionX + ' . ' + positionY,
     price: getRandomValue(1000, 1000000),
     type: getRandomArrayValue(typeDate),
@@ -51,7 +51,7 @@ function createApartmentObject(i) {
 }
 
 var rentedAccommodations = [];
-for (var i = 1; i <= 8; i++) {
+for (var i = 0; i < 8; i++) {
   rentedAccommodations.push(createApartmentObject(i));
 }
 
@@ -65,6 +65,7 @@ function getMapMarks(rentedAccommodation) {
     'px; top: ' + (rentedAccommodation.location.y - PIN_HEIGHT) + 'px');
   divMapMark.insertAdjacentHTML('afterbegin', '<img src="' + rentedAccommodation.author.avatar +
     '" class="rounded" width="40" height="40">');
+  divMapMark.setAttribute('tabindex', 0);
   return divMapMark;
 }
 
@@ -78,7 +79,6 @@ mapMarks.appendChild(fragment);
 
 var appartmentTemplate = document.querySelector('#lodge-template').content;
 var offerDialog = document.querySelector('.dialog');
-var dialogPanel = offerDialog.querySelector('.dialog__panel');
 var dialogTitle = offerDialog.querySelector('.dialog__title');
 
 
@@ -92,7 +92,7 @@ function determineOfferType(type) {
   }
 }
 
-function generateAppartmentObject(rentedAccommodation) {
+function generateDialogOffer(rentedAccommodation) {
   var offerObject = appartmentTemplate.cloneNode(true);
   var offerFeatures = offerObject.querySelector('.lodge__features');
   offerObject.querySelector('.lodge__title').textContent = rentedAccommodation.offer.title;
@@ -111,5 +111,71 @@ function generateAppartmentObject(rentedAccommodation) {
   dialogTitle.children[0].setAttribute('src', rentedAccommodation.author.avatar);
   return offerObject;
 }
-offerDialog.replaceChild(generateAppartmentObject(rentedAccommodations[0]), dialogPanel);
+
+var appartmentObject;
+
+function showDialogPanel(number) {
+  appartmentObject = generateDialogOffer(rentedAccommodations[number]);
+  offerDialog.replaceChild(appartmentObject, offerDialog.querySelector('.dialog__panel'));
+}
+
+showDialogPanel(0);
+
+var pins = document.querySelectorAll('.pin');
+var clickedPin = null;
+var dialogClose = offerDialog.querySelector('.dialog__close');
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
+var clickPinHeandler = function (evt) {
+  var hiddenDialog = document.getElementById('offer-dialog');
+
+  if (hiddenDialog.classList[1] === 'hidden') {
+    hiddenDialog.classList.remove('hidden');
+  }
+
+  if (clickedPin) {
+    clickedPin.classList.remove('pin--active');
+  }
+
+  clickedPin = evt.currentTarget;
+  clickedPin.classList.add('pin--active');
+  var index = clickedPin.getAttribute('data');
+  showDialogPanel(index - 1);
+};
+
+for (i = 0; i < pins.length; i++) {
+  pins[i].addEventListener('click', clickPinHeandler);
+  pins[i].setAttribute('data', i);
+  pins[i].addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEYCODE) {
+      clickPinHeandler(evt);
+    }
+  });
+}
+var activePin = document.getElementsByClassName('pin--active');
+function removePinActiveClass() {
+  activePin[0].classList.remove('pin--active');
+}
+
+function closeDialogPanel() {
+  removePinActiveClass();
+  offerDialog.classList.add('hidden');
+}
+
+dialogClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closeDialogPanel();
+  }
+});
+
+dialogClose.addEventListener('click', function () {
+  closeDialogPanel();
+});
+
+document.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ESC_KEYCODE && activePin) {
+    closeDialogPanel();
+  }
+});
 
