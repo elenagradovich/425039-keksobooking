@@ -179,3 +179,76 @@ document.addEventListener('keydown', function (evt) {
   }
 });
 
+
+var entryFieldTimein = document.getElementById('timein');
+var entryFieldTimeout = document.getElementById('timeout');
+var entryFieldType = document.getElementById('type');
+var entryFieldPrice = document.getElementById('price');
+var entryFieldRoomNumber = document.getElementById('room_number');
+var entryFieldCapacity = document.getElementById('capacity');
+
+
+
+entryFieldTimein.addEventListener('click', function () {
+  if (entryFieldTimein.value === '12:00') {
+    entryFieldTimeout.value = '12:00';
+  } else if (entryFieldTimein.value === '13:00') {
+    entryFieldTimeout.value = '13:00';
+  } else if (entryFieldTimein.value === '14:00') {
+    entryFieldTimeout.value = '14:00';
+  }
+});
+
+entryFieldTimeout.addEventListener('click', function () {
+  if (entryFieldTimeout.value === '12:00') {
+    entryFieldTimein.value = '12:00';
+  } else if (entryFieldTimeout.value === '13:00') {
+    entryFieldTimein.value = '13:00';
+  } else if (entryFieldTimeout.value === '14:00') {
+    entryFieldTimein.value = '14:00';
+  }
+});
+
+entryFieldType.addEventListener('click', function () {
+  if (entryFieldType.value === 'bungalo') {
+    entryFieldPrice.min = '0';
+    entryFieldPrice.value = entryFieldPrice.min;
+  } else if (entryFieldType.value === 'flat') {
+    entryFieldPrice.min = '1000';
+    entryFieldPrice.value = entryFieldPrice.min;
+  } else if (entryFieldType.value === 'house') {
+    entryFieldPrice.min = '5000';
+    entryFieldPrice.value = entryFieldPrice.min;
+  } else if (entryFieldType.value === 'palace') {
+    entryFieldPrice.min = '10000';
+    entryFieldPrice.value = entryFieldPrice.min;
+  }
+});
+
+entryFieldType.addEventListener('click', function () {
+  if (entryFieldType.value === 'bungalo') {
+    entryFieldPrice.min = '0';
+    entryFieldPrice.value = entryFieldPrice.min;
+  } else if (entryFieldType.value === 'flat') {
+    entryFieldPrice.min = '1000';
+    entryFieldPrice.value = entryFieldPrice.min;
+  } else if (entryFieldType.value === 'house') {
+    entryFieldPrice.min = '5000';
+    entryFieldPrice.value = entryFieldPrice.min;
+  } else if (entryFieldType.value === 'palace') {
+    entryFieldPrice.min = '10000';
+    entryFieldPrice.value = entryFieldPrice.min;
+  }
+});
+
+entryFieldRoomNumber.addEventListener('click', function () {
+  if (entryFieldRoomNumber.value === '1') {
+    entryFieldCapacity.value = '1';
+  } else if (entryFieldRoomNumber.value === '2') {
+    entryFieldCapacity.value = '2';
+  } else if (entryFieldRoomNumber.value === '3') {
+    entryFieldCapacity.value = '3';
+  } else if (entryFieldRoomNumber.value === '100') {
+    entryFieldCapacity.value = '0';
+  }
+});
