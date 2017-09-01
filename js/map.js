@@ -269,9 +269,8 @@ entryFieldRoomNumber.addEventListener('click', function () {
   }
 });
 
-var inputValidHeandler = function () {
+var inputTitleHeandler = function () {
   inputTitle.setCustomValidity('');
-  inputTitle.setAttribute('style', 'border: none');
   if (!inputTitle.validity.valid) {
     inputTitle.setAttribute('style', 'border: 2px solid red');
     if (inputTitle.validity.tooShort) {
@@ -283,10 +282,12 @@ var inputValidHeandler = function () {
     }
   } else {
     inputTitle.setCustomValidity('');
+    inputTitle.setAttribute('style', 'border: none');
   }
+};
 
+var inputAddressHeandler = function () {
   inputAddress.setCustomValidity('');
-  inputAddress.setAttribute('style', 'border: none');
   if (!inputAddress.validity.valid) {
     inputTitle.setAttribute('style', 'border: 2px solid red');
     if (inputAddress.validity.valueMissing) {
@@ -294,12 +295,13 @@ var inputValidHeandler = function () {
     }
   } else {
     inputAddress.setCustomValidity('');
+    inputAddress.setAttribute('style', 'border: none');
   }
 };
 
 
-inputTitle.addEventListener('invalid', inputValidHeandler);
-inputTitle.addEventListener('change', inputValidHeandler);
+inputTitle.addEventListener('invalid', inputTitleHeandler);
+inputTitle.addEventListener('blur', inputTitleHeandler);
 
-inputAddress.addEventListener('invalid', inputValidHeandler);
-inputAddress.addEventListener('change', inputValidHeandler);
+inputAddress.addEventListener('invalid', inputAddressHeandler);
+inputAddress.addEventListener('blur', inputAddressHeandler);
