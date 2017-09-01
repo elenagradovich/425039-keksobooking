@@ -665,9 +665,3 @@ select option:hover {
 .rounded {
     border-radius: 50%;
 }
-
-#title:invalid,
-#address:invalid,
-#price:invalid {
-  border: 2px solid red;
-}
