@@ -289,7 +289,7 @@ var inputTitleHeandler = function () {
 var inputAddressHeandler = function () {
   inputAddress.setCustomValidity('');
   if (!inputAddress.validity.valid) {
-    inputTitle.setAttribute('style', 'border: 2px solid red');
+    inputAddress.setAttribute('style', 'border: 2px solid red');
     if (inputAddress.validity.valueMissing) {
       inputAddress.setCustomValidity('Обязательное поле');
     }
@@ -301,7 +301,7 @@ var inputAddressHeandler = function () {
 
 
 inputTitle.addEventListener('invalid', inputTitleHeandler);
-inputTitle.addEventListener('blur', inputTitleHeandler);
+inputTitle.addEventListener('input', inputTitleHeandler);
 
 inputAddress.addEventListener('invalid', inputAddressHeandler);
-inputAddress.addEventListener('blur', inputAddressHeandler);
+inputAddress.addEventListener('input', inputAddressHeandler);
