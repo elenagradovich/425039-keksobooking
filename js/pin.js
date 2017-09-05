@@ -4,15 +4,14 @@
   var clickedPin = null;
   window.pin = {
     activePin: document.getElementsByClassName('pin--active'),
-
+    PIN_WIDTH: 56,
+    PIN_HEIGHT: 75,
     getMapMarks: function (rentedAccommodation) {
       var divMapMark = document.createElement('div');
-      var PIN_WIDTH = 56;
-      var PIN_HEIGHT = 75;
 
       divMapMark.className = 'pin';
-      divMapMark.setAttribute('style', 'left: ' + (rentedAccommodation.location.x - PIN_WIDTH / 2) +
-        'px; top: ' + (rentedAccommodation.location.y - PIN_HEIGHT) + 'px');
+      divMapMark.setAttribute('style', 'left: ' + (rentedAccommodation.location.x - window.pin.PIN_WIDTH / 2) +
+        'px; top: ' + (rentedAccommodation.location.y - window.pin.PIN_HEIGHT) + 'px');
       divMapMark.insertAdjacentHTML('afterbegin', '<img src="' + rentedAccommodation.author.avatar +
         '" class="rounded" width="40" height="40">');
       divMapMark.setAttribute('tabindex', 0);
