@@ -1,16 +1,17 @@
 'use strict';
 
 (function () {
+  window.pinCurentAd = document.querySelector('.pin__main');
   var clickedPin = null;
   window.pin = {
     activePin: document.getElementsByClassName('pin--active'),
-    PIN_WIDTH: 56,
-    PIN_HEIGHT: 75,
+    PIN_WIDTH: Math.round(parseInt(window.getComputedStyle(window.pinCurentAd).width, 10) / 2),
+    PIN_HEIGHT: parseInt(window.getComputedStyle(window.pinCurentAd).height, 10),
     getMapMarks: function (rentedAccommodation) {
       var divMapMark = document.createElement('div');
 
       divMapMark.className = 'pin';
-      divMapMark.setAttribute('style', 'left: ' + (rentedAccommodation.location.x - window.pin.PIN_WIDTH / 2) +
+      divMapMark.setAttribute('style', 'left: ' + (rentedAccommodation.location.x - window.pin.PIN_WIDTH) +
         'px; top: ' + (rentedAccommodation.location.y - window.pin.PIN_HEIGHT) + 'px');
       divMapMark.insertAdjacentHTML('afterbegin', '<img src="' + rentedAccommodation.author.avatar +
         '" class="rounded" width="40" height="40">');
