@@ -42,9 +42,17 @@
     }
   });
 
-  var pinCurentAd = document.querySelector('.pin__main');
+  window.pinCurentAd = document.querySelector('.pin__main');
+  var insertAddressValue = function (x, y) {
+    var pinPosition = 'x: ' + x + ', y: ' + y;
+    inputAddress.setAttribute('value', pinPosition);
+  };
 
-  pinCurentAd.addEventListener('mousedown', function (evt) {
+  var pinX = parseInt(window.getComputedStyle(window.pinCurentAd).left, 10);
+  var pinY = parseInt(window.getComputedStyle(window.pinCurentAd).top, 10);
+  insertAddressValue(pinX + window.pin.PIN_WIDTH, pinY + window.pin.PIN_HEIGHT);
+
+  window.pinCurentAd.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     var startingPinPosition = {
       x: evt.clientX,
@@ -62,14 +70,13 @@
         y: moveEvt.clientY
       };
 
-      pinCurentAd.style.top = (pinCurentAd.offsetTop - shift.y) + 'px';
-      pinCurentAd.style.left = (pinCurentAd.offsetLeft - shift.x) + 'px';
+      window.pinCurentAd.style.top = (window.pinCurentAd.offsetTop - shift.y) + 'px';
+      window.pinCurentAd.style.left = (window.pinCurentAd.offsetLeft - shift.x) + 'px';
       var pinAddress = {
-        y: pinCurentAd.offsetTop - shift.y - window.pin.PIN_HEIGHT,
-        x: pinCurentAd.offsetLeft - shift.x - (window.pin.PIN_WIDTH / 2)
+        y: window.pinCurentAd.offsetTop - shift.y + window.pin.PIN_HEIGHT,
+        x: window.pinCurentAd.offsetLeft - shift.x + window.pin.PIN_WIDTH
       };
-      var pinPosition = 'x: ' + pinAddress.x + ', y: ' + pinAddress.y;
-      inputAddress.setAttribute('value', pinPosition);
+      insertAddressValue(pinAddress.x, pinAddress.y);
     };
 
     var onMouseUp = function (upEvt) {
