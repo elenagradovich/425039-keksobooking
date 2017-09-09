@@ -25,33 +25,40 @@
     }
   };
 
-  var syncRoomsOpacity = function (value1, element) {
+  var syncRoomsCapacity = function (value1, element) {
 
-    function resetClassHidden(number) {
-      for (var i = 0; i < entryFieldCapacity.length; i++) {
-        entryFieldCapacity.children[i].removeAttribute('selected');
-        entryFieldCapacity.children[i].classList.remove('hidden');
-      }
-      entryFieldCapacity.children[number].setAttribute('selected', true);
+    var selectedValue = value1;
+    var invisibleElements = [];
+
+    switch (selectedValue) {
+      case '1':
+        invisibleElements = ['0', '2', '3'];
+        break;
+      case '2':
+        invisibleElements = ['0', '3'];
+        break;
+      case '3':
+        invisibleElements = ['0'];
+        break;
+      default:
+        selectedValue = '0';
+        invisibleElements = ['1', '2', '3'];
+        break;
     }
 
-    if (value1 === '1') {
-      resetClassHidden(2);
-      element.children[0].classList.add('hidden');
-      element.children[1].classList.add('hidden');
-      element.children[3].classList.add('hidden');
-    } else if (value1 === '2') {
-      resetClassHidden(1);
-      element.children[0].classList.add('hidden');
-      element.children[3].classList.add('hidden');
-    } else if (value1 === '3') {
-      resetClassHidden(0);
-      element.children[3].classList.add('hidden');
-    } else if (value1 === '100') {
-      resetClassHidden(3);
-      element.children[0].classList.add('hidden');
-      element.children[1].classList.add('hidden');
-      element.children[2].classList.add('hidden');
+    for (var i = 0; i < element.length; i++) {
+      var child = element.children[i];
+      if (child.value === selectedValue) {
+        child.setAttribute('selected', true);
+      } else {
+        child.removeAttribute('selected');
+      }
+
+      if (invisibleElements.indexOf(child.value) >= 0) {
+        child.classList.add('hidden');
+      } else {
+        child.classList.remove('hidden');
+      }
     }
   };
 
@@ -70,9 +77,14 @@
         syncTypeMinPrice);
   });
 
+  document.addEventListener('DOMContentLoaded', function () {
+    window.synchronizeFields(entryFieldRoomNumber, entryFieldCapacity,
+        syncRoomsCapacity);
+  });
+
   entryFieldRoomNumber.addEventListener('change', function () {
     window.synchronizeFields(entryFieldRoomNumber, entryFieldCapacity,
-        syncRoomsOpacity);
+        syncRoomsCapacity);
   });
 
   // Валидация полей ввода
