@@ -9,87 +9,63 @@
   var inputTitle = document.getElementById('title');
   var inputAddress = document.getElementById('address');
 
-  entryFieldTimein.addEventListener('click', function () {
-    if (entryFieldTimein.value === '12:00') {
-      entryFieldTimeout.value = '12:00';
-    } else if (entryFieldTimein.value === '13:00') {
-      entryFieldTimeout.value = '13:00';
-    } else if (entryFieldTimein.value === '14:00') {
-      entryFieldTimeout.value = '14:00';
+  var syncValues = function (value1, element) {
+    element.value = value1;
+  };
+
+  var syncTypeMinPrice = function (value1, element) {
+    if (value1 === 'bungalo') {
+      element.value = element.min = '0';
+    } else if (value1 === 'flat') {
+      element.value = element.min = '1000';
+    } else if (value1 === 'house') {
+      element.value = element.min = '5000';
+    } else if (value1 === 'palace') {
+      element.value = element.min = '10000';
     }
+  };
+
+  var syncRoomsCapacity = function (value1, element) {
+    for (var i = 0; i < element.length; i++) {
+      if (value1 !== '100' && value1 >= element.children[i].value && element.children[i].value !== '0') {
+        element.children[i].setAttribute('selected', true);
+        element.children[i].classList.remove('hidden');
+      } else if (value1 === '100' && element.children[i].value === '0') {
+        element.children[i].setAttribute('selected', true);
+        element.children[i].classList.remove('hidden');
+      } else {
+        element.children[i].removeAttribute('selected');
+        element.children[i].classList.add('hidden');
+      }
+    }
+  };
+
+  entryFieldTimein.addEventListener('change', function () {
+    window.synchronizeFields(entryFieldTimein, entryFieldTimeout,
+        syncValues);
   });
 
-  entryFieldTimeout.addEventListener('click', function () {
-    if (entryFieldTimeout.value === '12:00') {
-      entryFieldTimein.value = '12:00';
-    } else if (entryFieldTimeout.value === '13:00') {
-      entryFieldTimein.value = '13:00';
-    } else if (entryFieldTimeout.value === '14:00') {
-      entryFieldTimein.value = '14:00';
-    }
+  entryFieldTimeout.addEventListener('change', function () {
+    window.synchronizeFields(entryFieldTimeout, entryFieldTimein,
+        syncValues);
   });
 
-  entryFieldType.addEventListener('click', function () {
-    if (entryFieldType.value === 'bungalo') {
-      entryFieldPrice.min = '0';
-      entryFieldPrice.value = entryFieldPrice.min;
-    } else if (entryFieldType.value === 'flat') {
-      entryFieldPrice.min = '1000';
-      entryFieldPrice.value = entryFieldPrice.min;
-    } else if (entryFieldType.value === 'house') {
-      entryFieldPrice.min = '5000';
-      entryFieldPrice.value = entryFieldPrice.min;
-    } else if (entryFieldType.value === 'palace') {
-      entryFieldPrice.min = '10000';
-      entryFieldPrice.value = entryFieldPrice.min;
-    }
+  entryFieldType.addEventListener('change', function () {
+    window.synchronizeFields(entryFieldType, entryFieldPrice,
+        syncTypeMinPrice);
   });
 
-  entryFieldType.addEventListener('click', function () {
-    if (entryFieldType.value === 'bungalo') {
-      entryFieldPrice.min = '0';
-      entryFieldPrice.value = entryFieldPrice.min;
-    } else if (entryFieldType.value === 'flat') {
-      entryFieldPrice.min = '1000';
-      entryFieldPrice.value = entryFieldPrice.min;
-    } else if (entryFieldType.value === 'house') {
-      entryFieldPrice.min = '5000';
-      entryFieldPrice.value = entryFieldPrice.min;
-    } else if (entryFieldType.value === 'palace') {
-      entryFieldPrice.min = '10000';
-      entryFieldPrice.value = entryFieldPrice.min;
-    }
+  document.addEventListener('DOMContentLoaded', function () {
+    window.synchronizeFields(entryFieldRoomNumber, entryFieldCapacity,
+        syncRoomsCapacity);
   });
 
-  function resetClassHidden(number) {
-    for (var i = 0; i < entryFieldCapacity.length; i++) {
-      entryFieldCapacity.children[i].removeAttribute('selected');
-      entryFieldCapacity.children[i].classList.remove('hidden');
-    }
-    entryFieldCapacity.children[number].setAttribute('selected', true);
-  }
-
-  entryFieldRoomNumber.addEventListener('click', function () {
-    if (entryFieldRoomNumber.value === '1') {
-      resetClassHidden(2);
-      entryFieldCapacity.children[0].classList.add('hidden');
-      entryFieldCapacity.children[1].classList.add('hidden');
-      entryFieldCapacity.children[3].classList.add('hidden');
-    } else if (entryFieldRoomNumber.value === '2') {
-      resetClassHidden(1);
-      entryFieldCapacity.children[0].classList.add('hidden');
-      entryFieldCapacity.children[3].classList.add('hidden');
-    } else if (entryFieldRoomNumber.value === '3') {
-      resetClassHidden(0);
-      entryFieldCapacity.children[3].classList.add('hidden');
-    } else if (entryFieldRoomNumber.value === '100') {
-      resetClassHidden(3);
-      entryFieldCapacity.children[0].classList.add('hidden');
-      entryFieldCapacity.children[1].classList.add('hidden');
-      entryFieldCapacity.children[2].classList.add('hidden');
-    }
+  entryFieldRoomNumber.addEventListener('change', function () {
+    window.synchronizeFields(entryFieldRoomNumber, entryFieldCapacity,
+        syncRoomsCapacity);
   });
 
+  // Валидация полей ввода
   var inputTitleHeandler = function () {
     inputTitle.setCustomValidity('');
     if (!inputTitle.validity.valid) {
