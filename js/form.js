@@ -26,38 +26,16 @@
   };
 
   var syncRoomsCapacity = function (value1, element) {
-
-    var selectedValue = value1;
-    var invisibleElements = [];
-
-    switch (selectedValue) {
-      case '1':
-        invisibleElements = ['0', '2', '3'];
-        break;
-      case '2':
-        invisibleElements = ['0', '3'];
-        break;
-      case '3':
-        invisibleElements = ['0'];
-        break;
-      default:
-        selectedValue = '0';
-        invisibleElements = ['1', '2', '3'];
-        break;
-    }
-
     for (var i = 0; i < element.length; i++) {
-      var child = element.children[i];
-      if (child.value === selectedValue) {
-        child.setAttribute('selected', true);
+      if (value1 !== '100' && value1 >= element.children[i].value && element.children[i].value !== '0') {
+        element.children[i].setAttribute('selected', true);
+        element.children[i].classList.remove('hidden');
+      } else if (value1 === '100' && element.children[i].value === '0') {
+        element.children[i].setAttribute('selected', true);
+        element.children[i].classList.remove('hidden');
       } else {
-        child.removeAttribute('selected');
-      }
-
-      if (invisibleElements.indexOf(child.value) >= 0) {
-        child.classList.add('hidden');
-      } else {
-        child.classList.remove('hidden');
+        element.children[i].removeAttribute('selected');
+        element.children[i].classList.add('hidden');
       }
     }
   };
