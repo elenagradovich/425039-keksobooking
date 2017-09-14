@@ -8,6 +8,7 @@
   var entryFieldCapacity = document.getElementById('capacity');
   var inputTitle = document.getElementById('title');
   var inputAddress = document.getElementById('address');
+  var formNotice = document.querySelector('.notice__form');
 
   var syncValues = function (value1, element) {
     element.value = value1;
@@ -102,4 +103,37 @@
 
   inputAddress.addEventListener('invalid', inputAddressHeandler);
   inputAddress.addEventListener('input', inputAddressHeandler);
+
+  var loadDataHeandler = function (data) {
+    window.cachedRentedAccommodations = [];
+    for (var i = 0; i < data.length; i++) {
+      window.cachedRentedAccommodations.push(data[i]);
+    }
+    console.log(window.cachedRentedAccommodations);
+    window.map.renderFragment(window.cachedRentedAccommodations);
+    window.showDialog.showCard();
+    window.card.showDialogPanel(0);
+  };
+
+  var saveDataHeandler = function () {
+    formNotice.reset();
+  };
+  var errorHeandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.backend.load(loadDataHeandler, errorHeandler);
+
+  formNotice.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    console.log(new FormData(formNotice));
+    window.backend.save(new FormData(formNotice), saveDataHeandler, errorHeandler);
+  });
 })();

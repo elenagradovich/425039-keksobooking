@@ -1,5 +1,6 @@
-'use strict';
+/*
 
+'use strict';
 (function () {
   var titleDate = [
     'Большая уютная квартира',
@@ -61,3 +62,4 @@
     })()
   };
 })();
+ */

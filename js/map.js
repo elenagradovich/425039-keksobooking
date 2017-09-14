@@ -1,15 +1,17 @@
 'use strict';
 
 (function () {
-  var mapMarks = document.querySelector('.tokyo__pin-map');
-  var fragment = document.createDocumentFragment();
   var inputAddress = document.getElementById('address');
-
-  for (var j = 0; j < 8; j++) {
-    fragment.appendChild(window.pin.getMapMarks(window.data.rentedAccommodations[j]));
-  }
-  mapMarks.appendChild(fragment);
-  window.card.showDialogPanel(0);
+  var fragment = document.createDocumentFragment();
+  var mapMarks = document.querySelector('.tokyo__pin-map');
+  window.map = {
+    renderFragment: function (data) {
+      for (var j = 0; j < 8; j++) {
+        fragment.appendChild(window.pin.getMapMarks(data[j]));
+      }
+      mapMarks.appendChild(fragment);
+    }
+  };
 
   var dialogClose = document.querySelector('.dialog__close');
   var ESC_KEYCODE = 27;
@@ -19,8 +21,6 @@
       window.card.closeDialogPanel();
     }
   });
-
-  window.showDialog.showCard();
 
   dialogClose.addEventListener('click', function () {
     window.card.closeDialogPanel();
