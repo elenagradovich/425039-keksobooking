@@ -109,7 +109,6 @@
     for (var i = 0; i < data.length; i++) {
       window.cachedRentedAccommodations.push(data[i]);
     }
-    console.log(window.cachedRentedAccommodations);
     window.map.renderFragment(window.cachedRentedAccommodations);
     window.showDialog.showCard();
     window.card.showDialogPanel(0);
@@ -133,7 +132,6 @@
 
   formNotice.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    console.log(new FormData(formNotice));
     window.backend.save(new FormData(formNotice), saveDataHeandler, errorHeandler);
   });
 })();
