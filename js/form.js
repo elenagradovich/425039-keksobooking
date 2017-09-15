@@ -30,13 +30,13 @@
     for (var i = 0; i < element.length; i++) {
       if (value1 !== '100' && value1 >= element.children[i].value && element.children[i].value !== '0') {
         element.children[i].setAttribute('selected', true);
-        element.children[i].classList.remove('hidden');
+        element.children[i].removeAttribute('disabled');
       } else if (value1 === '100' && element.children[i].value === '0') {
         element.children[i].setAttribute('selected', true);
-        element.children[i].classList.remove('hidden');
+        element.children[i].removeAttribute('disabled');
       } else {
         element.children[i].removeAttribute('selected');
-        element.children[i].classList.add('hidden');
+        element.children[i].setAttribute('disabled', true);
       }
     }
   };
