@@ -6,7 +6,7 @@
   var mapMarks = document.querySelector('.tokyo__pin-map');
   window.map = {
     renderFragment: function (data) {
-      for (var j = 0; j < 8; j++) {
+      for (var j = 0; j < data.length; j++) {
         fragment.appendChild(window.pin.getMapMarks(data[j]));
       }
       mapMarks.appendChild(fragment);
