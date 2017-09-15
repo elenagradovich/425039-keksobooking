@@ -67,7 +67,7 @@
   });
 
   // Валидация полей ввода
-  var inputTitleHeandler = function () {
+  var inputTitleHandler = function () {
     inputTitle.setCustomValidity('');
     if (!inputTitle.validity.valid) {
       inputTitle.setAttribute('style', 'border: 2px solid red');
@@ -84,7 +84,7 @@
     }
   };
 
-  var inputAddressHeandler = function () {
+  var inputAddressHandler = function () {
     inputAddress.setCustomValidity('');
     if (!inputAddress.validity.valid) {
       inputAddress.setAttribute('style', 'border: 2px solid red');
@@ -98,13 +98,13 @@
   };
 
 
-  inputTitle.addEventListener('invalid', inputTitleHeandler);
-  inputTitle.addEventListener('input', inputTitleHeandler);
+  inputTitle.addEventListener('invalid', inputTitleHandler);
+  inputTitle.addEventListener('input', inputTitleHandler);
 
-  inputAddress.addEventListener('invalid', inputAddressHeandler);
-  inputAddress.addEventListener('input', inputAddressHeandler);
+  inputAddress.addEventListener('invalid', inputAddressHandler);
+  inputAddress.addEventListener('input', inputAddressHandler);
 
-  var loadDataHeandler = function (data) {
+  var loadDataHandler = function (data) {
     window.cachedRentedAccommodations = [];
     for (var i = 0; i < data.length; i++) {
       window.cachedRentedAccommodations.push(data[i]);
@@ -114,10 +114,10 @@
     window.card.showDialogPanel(0);
   };
 
-  var saveDataHeandler = function () {
+  var saveDataHandler = function () {
     formNotice.reset();
   };
-  var errorHeandler = function (errorMessage) {
+  var errorHandler = function (errorMessage) {
     var node = document.createElement('div');
     node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
     node.style.position = 'absolute';
@@ -128,10 +128,10 @@
     document.body.insertAdjacentElement('afterbegin', node);
   };
 
-  window.backend.load(loadDataHeandler, errorHeandler);
+  window.backend.load(loadDataHandler, errorHandler);
 
   formNotice.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(formNotice), saveDataHeandler, errorHeandler);
+    window.backend.save(new FormData(formNotice), saveDataHandler, errorHandler);
   });
 })();
