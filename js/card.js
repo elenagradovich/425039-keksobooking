@@ -38,9 +38,6 @@
 
   window.card = {
     showDialogPanel: function (number) {
-     /* if (!window.cachedRentedAccommodations) {
-        return;
-      }*/
       appartmentObject = generateDialogOffer(window.cachedRentedAccommodations[number]);
       offerDialog.replaceChild(appartmentObject, offerDialog.querySelector('.dialog__panel'));
     },
