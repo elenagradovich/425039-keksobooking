@@ -19,7 +19,7 @@
       return divMapMark;
     },
 
-    clickPinHeandler: function (evt) {
+    clickPinHandler: function (evt) {
       var hiddenDialog = document.getElementById('offer-dialog');
 
       if (hiddenDialog.classList[1] === 'hidden') {

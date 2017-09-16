@@ -27,7 +27,7 @@
       ' гостей в ' + rentedAccommodation.offer.rooms + ' комнатах';
     offerObject.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + rentedAccommodation.offer.checkin +
       ', выезд до ' + rentedAccommodation.offer.checkout;
-    for (var i = 0; i < window.featuresDate.length; i++) {
+    for (var i = 0; i < rentedAccommodation.offer.features.length; i++) {
       offerFeatures.insertAdjacentHTML('beforeend', '<span class="feature__image feature__image--' +
         rentedAccommodation.offer.features[i] + '"></span>');
     }
@@ -38,7 +38,7 @@
 
   window.card = {
     showDialogPanel: function (number) {
-      appartmentObject = generateDialogOffer(window.data.rentedAccommodations[number]);
+      appartmentObject = generateDialogOffer(window.cachedRentedAccommodations[number]);
       offerDialog.replaceChild(appartmentObject, offerDialog.querySelector('.dialog__panel'));
     },
 

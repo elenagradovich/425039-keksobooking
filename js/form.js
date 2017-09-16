@@ -8,6 +8,7 @@
   var entryFieldCapacity = document.getElementById('capacity');
   var inputTitle = document.getElementById('title');
   var inputAddress = document.getElementById('address');
+  var formNotice = document.querySelector('.notice__form');
 
   var syncValues = function (value1, element) {
     element.value = value1;
@@ -29,13 +30,13 @@
     for (var i = 0; i < element.length; i++) {
       if (value1 !== '100' && value1 >= element.children[i].value && element.children[i].value !== '0') {
         element.children[i].setAttribute('selected', true);
-        element.children[i].classList.remove('hidden');
+        element.children[i].removeAttribute('disabled');
       } else if (value1 === '100' && element.children[i].value === '0') {
         element.children[i].setAttribute('selected', true);
-        element.children[i].classList.remove('hidden');
+        element.children[i].removeAttribute('disabled');
       } else {
         element.children[i].removeAttribute('selected');
-        element.children[i].classList.add('hidden');
+        element.children[i].setAttribute('disabled', true);
       }
     }
   };
@@ -66,7 +67,7 @@
   });
 
   // Валидация полей ввода
-  var inputTitleHeandler = function () {
+  var inputTitleHandler = function () {
     inputTitle.setCustomValidity('');
     if (!inputTitle.validity.valid) {
       inputTitle.setAttribute('style', 'border: 2px solid red');
@@ -83,7 +84,7 @@
     }
   };
 
-  var inputAddressHeandler = function () {
+  var inputAddressHandler = function () {
     inputAddress.setCustomValidity('');
     if (!inputAddress.validity.valid) {
       inputAddress.setAttribute('style', 'border: 2px solid red');
@@ -97,9 +98,40 @@
   };
 
 
-  inputTitle.addEventListener('invalid', inputTitleHeandler);
-  inputTitle.addEventListener('input', inputTitleHeandler);
+  inputTitle.addEventListener('invalid', inputTitleHandler);
+  inputTitle.addEventListener('input', inputTitleHandler);
 
-  inputAddress.addEventListener('invalid', inputAddressHeandler);
-  inputAddress.addEventListener('input', inputAddressHeandler);
+  inputAddress.addEventListener('invalid', inputAddressHandler);
+  inputAddress.addEventListener('input', inputAddressHandler);
+
+  var loadDataHandler = function (data) {
+    window.cachedRentedAccommodations = [];
+    for (var i = 0; i < data.length; i++) {
+      window.cachedRentedAccommodations.push(data[i]);
+    }
+    window.map.renderFragment(window.cachedRentedAccommodations);
+    window.showDialog.showCard();
+    window.card.showDialogPanel(0);
+  };
+
+  var saveDataHandler = function () {
+    formNotice.reset();
+  };
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.backend.load(loadDataHandler, errorHandler);
+
+  formNotice.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(formNotice), saveDataHandler, errorHandler);
+  });
 })();
