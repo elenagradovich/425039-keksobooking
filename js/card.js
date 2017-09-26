@@ -43,8 +43,8 @@
     },
 
     closeDialogPanel: function () {
-      window.pin.removePinActiveClass();
       offerDialog.classList.add('hidden');
+      window.pin.removePinActiveClass();
     }
   };
 })();

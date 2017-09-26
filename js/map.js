@@ -3,13 +3,33 @@
 (function () {
   var inputAddress = document.getElementById('address');
   var fragment = document.createDocumentFragment();
-  var mapMarks = document.querySelector('.tokyo__pin-map');
+  window.mapMarks = document.querySelector('.tokyo__pin-map');
   window.map = {
     renderFragment: function (data) {
       for (var j = 0; j < data.length; j++) {
-        fragment.appendChild(window.pin.getMapMarks(data[j]));
+        var pin = window.pin.getMapMarks(data[j]);
+
+        var getIndexByTitle = function (title) {
+          var index = -1;
+          window.cachedRentedAccommodations.forEach(function (item, i) {
+            if (item.offer.title === title) {
+              index = i;
+            }
+          });
+          return index;
+        };
+
+        pin.addEventListener('click', window.pin.clickPinHandler);
+        pin.setAttribute('data', getIndexByTitle(data[j].offer.title) + 1);
+        pin.addEventListener('keydown', function (evt) {
+          if (evt.keyCode === window.showDialog.ENTER_KEYCODE) {
+            window.pin.clickPinHandler(evt);
+          }
+        });
+
+        fragment.appendChild(pin);
       }
-      mapMarks.appendChild(fragment);
+      window.mapMarks.appendChild(fragment);
     }
   };
 
