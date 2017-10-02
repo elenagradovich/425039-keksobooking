@@ -173,42 +173,62 @@
   };
 
   housingType.addEventListener('change', function () {
-    renderFilteredData(housingType);
+    window.debounce(function () {
+      renderFilteredData(housingType);
+    });
   });
 
   housingPrice.addEventListener('change', function () {
-    renderFilteredData(housingPrice);
+    window.debounce(function () {
+      renderFilteredData(housingPrice);
+    });
   });
 
   housingRoomNumber.addEventListener('change', function () {
-    renderFilteredData(housingRoomNumber);
+    window.debounce(function () {
+      renderFilteredData(housingRoomNumber);
+    });
   });
 
   housingGuestsNumber.addEventListener('change', function () {
-    renderFilteredData(housingGuestsNumber);
+    window.debounce(function () {
+      renderFilteredData(housingGuestsNumber);
+    });
   });
 
   featureWifi.addEventListener('change', function () {
-    renderFilteredData(featureWifi);
+    window.debounce(function () {
+      renderFilteredData(featureWifi);
+    });
   });
 
   featueDishwasher.addEventListener('change', function () {
-    renderFilteredData(featueDishwasher);
+    window.debounce(function () {
+      renderFilteredData(featueDishwasher);
+    });
   });
 
   featueWasher.addEventListener('change', function () {
-    renderFilteredData(featueWasher);
+    window.debounce(function () {
+      renderFilteredData(featueWasher);
+    });
   });
 
   featueParking.addEventListener('change', function () {
-    renderFilteredData(featueParking);
+    window.debounce(function () {
+      renderFilteredData(featueParking);
+    });
   });
 
   featueElevator.addEventListener('change', function () {
-    renderFilteredData(featueElevator);
+    window.debounce(function () {
+      renderFilteredData(featueElevator);
+    });
   });
 
   featueConditioner.addEventListener('change', function () {
-    renderFilteredData(featueConditioner);
+    window.debounce(function () {
+      renderFilteredData(featueConditioner);
+    });
   });
 })();
